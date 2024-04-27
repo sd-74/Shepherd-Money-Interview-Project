@@ -28,9 +28,9 @@ public class User {
 
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "owner")
     private List<CreditCard> creditCards;
-    private HashMap<User, List<CreditCard>> usersCards;
+    //private HashMap<User, List<CreditCard>> usersCards;
 
     // TODO: User's credit card
     // HINT: A user can have one or more, or none at all. We want to be able to query credit cards by user

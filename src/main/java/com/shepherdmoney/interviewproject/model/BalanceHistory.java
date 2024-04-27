@@ -1,6 +1,7 @@
 package com.shepherdmoney.interviewproject.model;
 
 import java.time.LocalDate;
+import java.time.Instant;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,5 +27,15 @@ public class BalanceHistory {
     private LocalDate date;
 
     private double balance;
-    
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "credit_card_id")
+    private CreditCard creditCard;
+
+
+    public BalanceHistory(LocalDate date, double balance, CreditCard creditCard) {
+        this.date = date;
+        this.balance = balance;
+        this.creditCard = creditCard;
+    }    
 }
