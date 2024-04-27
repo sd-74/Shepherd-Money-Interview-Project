@@ -10,6 +10,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.List;
+
+
 @Entity
 @Getter
 @Setter
@@ -24,6 +27,11 @@ public class CreditCard {
     private String issuanceBank;
 
     private String number;
+
+    private User owner;
+
+    private List<BalanceHistory> balanceHistory;
+
 
     // TODO: Credit card's owner. For detailed hint, please see User class
     // Some field here <> owner;

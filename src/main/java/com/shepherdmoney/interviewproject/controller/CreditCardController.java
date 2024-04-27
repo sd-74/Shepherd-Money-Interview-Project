@@ -3,18 +3,26 @@ package com.shepherdmoney.interviewproject.controller;
 import com.shepherdmoney.interviewproject.vo.request.AddCreditCardToUserPayload;
 import com.shepherdmoney.interviewproject.vo.request.UpdateBalancePayload;
 import com.shepherdmoney.interviewproject.vo.response.CreditCardView;
+import com.shepherdmoney.interviewproject.repository.CreditCardRepository;
+import com.shepherdmoney.interviewproject.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 
 @RestController
 public class CreditCardController {
 
     // TODO: wire in CreditCard repository here (~1 line)
+    @Autowired
+    private CreditCardRepository creditCardRepository;
+
 
     @PostMapping("/credit-card")
     public ResponseEntity<Integer> addCreditCardToUser(@RequestBody AddCreditCardToUserPayload payload) {
@@ -40,7 +48,7 @@ public class CreditCardController {
     }
 
     @PostMapping("/credit-card:update-balance")
-    public SomeEnityData postMethodName(@RequestBody UpdateBalancePayload[] payload) {
+    public ResponseEntity<Void> updateBalances(@RequestBody UpdateBalancePayload[] payload) {
         //TODO: Given a list of transactions, update credit cards' balance history.
         //      1. For the balance history in the credit card
         //      2. If there are gaps between two balance dates, fill the empty date with the balance of the previous date
