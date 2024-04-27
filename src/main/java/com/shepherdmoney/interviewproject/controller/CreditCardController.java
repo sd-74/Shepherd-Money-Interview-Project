@@ -1,5 +1,13 @@
 package com.shepherdmoney.interviewproject.controller;
 
+
+import com.shepherdmoney.interviewproject.model.CreditCard;
+import com.shepherdmoney.interviewproject.model.User;
+import com.shepherdmoney.interviewproject.repository.CreditCardRepository;
+import com.shepherdmoney.interviewproject.repository.UserRepository;
+
+import org.springframework.http.HttpStatus;
+
 import com.shepherdmoney.interviewproject.vo.request.AddCreditCardToUserPayload;
 import com.shepherdmoney.interviewproject.vo.request.UpdateBalancePayload;
 import com.shepherdmoney.interviewproject.vo.response.CreditCardView;
@@ -21,16 +29,36 @@ public class CreditCardController {
 
     // TODO: wire in CreditCard repository here (~1 line)
     @Autowired
-    private CreditCardRepository creditCardRepository;
+    CreditCardRepository creditCardRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
 
     @PostMapping("/credit-card")
     public ResponseEntity<Integer> addCreditCardToUser(@RequestBody AddCreditCardToUserPayload payload) {
-        // TODO: Create a credit card entity, and then associate that credit card with user with given userId
+        // TODO: Create a( credit card entity, and then associate that credit card with user with given userId
         //       Return 200 OK with the credit card id if the user exists and credit card is successfully associated with the user
         //       Return other appropriate response code for other exception cases
         //       Do not worry about validating the card number, assume card number could be any arbitrary format and length
-        return null;
+        
+        // create a user 
+        Optional<User> userO = userRepository.findById(payload.getUserId());
+        // return a 404 if use DNE
+        if (userO.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        // create a new cc for user
+        CreditCard creditCard = new CreditCard();
+        User user = userO.get();
+        creditCard.setOwner(user);
+        creditCard.setNumber(payload.getCardNumber());
+
+        //return 200 if everything is fine
+        return ResponseEntity.ok(creditCard.getId());
+
+        
     }
 
     @GetMapping("/credit-card:all")
